@@ -1,0 +1,15 @@
+.App {
+    width: 500px;
+}
+
+.App>h1 {
+    font-size: 40px;
+    margin-left: 20%;
+}
+
+.App>section {
+    padding: 20px;
+    background-color: rgb(245, 245, 245);
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
