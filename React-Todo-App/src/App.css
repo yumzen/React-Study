@@ -1,0 +1,22 @@
+/*
+1. 앱 페이지의 최대 너비 : 500px
+2. 페이지 너비 : 브라우저의 100%
+3. 여백 : 위 아래는 0px, 좌우는 자동으로 설정
+    - 만약, 브라우저의 너비가 500px 이하라면 좌우 여백은 자동으로 0px이 됨
+4. 요소의 크기 기준 설정 : box-sizing 속 border-box로 설정하여 내부 여백이 요소의 크기에 영향을 미치지 않도록 설정
+5. 내부 여백 : 20px
+6. 경계선 : 1px 두께의 회색 실선
+7. 요소를 수직이 아닌 수평으로 배치
+8. 요소들의 배치 방향은 column(수직 배치)
+9. 자식 요소들 간의 여백 : 30px
+*/
+.App{
+    max-width:500px;
+    width:100%;
+    margin : 0 auto;
+    box-sizing: border-box;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
