@@ -38,6 +38,7 @@ function App() {
   const idRef = useRef(3);
 
   //새 할 일 아이템을 추가하는 함수 onCreate
+  //Ref 객체를 이용해 아이템마다 고유 id를 가지게 됨
   const onCreate = (content) => {
     const newItem = {
       id : idRef.current,
@@ -51,11 +52,28 @@ function App() {
     idRef.current +=1;
   }
 
+  const onUpdate = (targetID) => {
+    setTodo (
+      todo.map(
+        (it) => {
+          if(it.id === targetID){
+            return {
+              ...it,
+              isDone : !it.isDone,
+            };
+          }else {
+            return it;
+          }
+        }
+      )
+    );
+  };
+
   return (
     <div className = "App">
       <Header/>
       <TodoEditor onCreate = {onCreate}/>
-      <TodoList/>
+      <TodoList todo = {todo} onUpdate = {onUpdate}/>
     </div>
   );
 }
