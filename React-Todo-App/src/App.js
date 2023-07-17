@@ -3,7 +3,7 @@ import Header from "./component/Header";
 import TodoEditor from "./component/TodoEditor";
 import TodoList from "./component/TodoList";
 import TestComp from "./component/TestComp";
-import {useReducer,useRef, useCallback} from "react";
+import React, {useReducer,useRef, useCallback, useMemo} from "react";
 
 //mock(목) 데이터란 모조품 데이터로, 기능을 완벽히 구현하지 않은 상태에서 테스트를 목적으로 사용하는 데이터
 const mockTodo = [
@@ -57,6 +57,10 @@ function reducer(state, action){
       return state;
   }
 }
+
+//TodoContext를 만들어 데이터를 공급하는 작업
+export const TodoStateContext = React.createContext();
+export const TodoDispatchContext = React.createContext();
 
 function App() {
   /*
@@ -126,11 +130,23 @@ function App() {
     });
   }, []);
 
+  const memoizedDispatches = useMemo(() => {
+    return {onCreate, onDelete, onUpdate};
+  }, []);
+
+  /*
+  TodoContext가 포함할 컴포넌트는 TodoEditor와 TodoList임! 따라서 두 컴포넌트를 감싸도록 Provider를 배치
+  TodoContext.Provider 컴포넌트에 값을 전달하기 위해 Props(value)를 객체로 설정한다. 이 객체에는 Context에 소속된 컴포넌트에 공급할 모든 값을 담는다.
+  */
   return (
     <div className = "App">
       <Header/>
-      <TodoEditor onCreate = {onCreate}/>
-      <TodoList todo = {todo} onUpdate = {onUpdate} onDelete = {onDelete}/>
+      <TodoStateContext.Provider value={{todo}}>
+        <TodoDispatchContext.Provider value = {{ onCreate, onDelete, onUpdate}}>
+          <TodoEditor />
+          <TodoList />
+          </TodoDispatchContext.Provider>
+      </TodoStateContext.Provider>
     </div>
   );
 }
