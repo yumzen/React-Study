@@ -3,7 +3,7 @@ import Header from "./component/Header";
 import TodoEditor from "./component/TodoEditor";
 import TodoList from "./component/TodoList";
 import TestComp from "./component/TestComp";
-import {useReducer,useRef} from "react";
+import {useReducer,useRef, useCallback} from "react";
 
 //mock(목) 데이터란 모조품 데이터로, 기능을 완벽히 구현하지 않은 상태에서 테스트를 목적으로 사용하는 데이터
 const mockTodo = [
@@ -94,7 +94,7 @@ function App() {
     idRef.current +=1;
   }
 
-  const onUpdate = (targetID) => {
+  const onUpdate = useCallback((targetID) => {
     /*
     setTodo (
       todo.map(
@@ -116,15 +116,15 @@ function App() {
       type :"UPDATE",
       targetID,
     });
-  };
+  }, []);
 
-  const onDelete = (targetID) => {
+  const onDelete = useCallback((targetID) => {
     // setTodo(todo.filter((it) => it.id !== targetID ));
     dispatch({
       type : "DELETE",
       targetID,
     });
-  };
+  }, []);
 
   return (
     <div className = "App">
