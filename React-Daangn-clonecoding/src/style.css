@@ -1,0 +1,87 @@
+*{
+    box-sizing: border-box;
+}
+
+.nav{
+    display: flex;
+    gap : auto;
+    align-items: center;
+    margin-top: 1%;
+    margin-left: 15%;
+    margin-right: 15%;
+    margin-bottom: 1%;
+}
+
+.nav .navbar{
+    display: flex;
+}
+
+.nav ul{
+    display: flex;
+    list-style: none;
+    margin : 0;
+    gap: 1.5rem;
+    align-items: center;
+    color : rgb(57, 57, 57);
+}
+
+.nav a{
+    color : inherit;
+    text-decoration: none;
+    display: flex;
+    font-weight : bold;
+    font-size : 17px;
+}
+
+.nav .ul li.active {
+    color: rgb(255, 128, 0);
+}
+
+.nav li:hover{
+    color : #797878;
+}
+
+.nav .searchAndChat {
+    display: flex;
+    margin : 0;
+    margin-right: 0;
+    list-style: none;
+}
+
+
+.nav .searchbar{
+    margin-left : 5rem;
+    border: none;
+    background-color: #eaebee;
+    color : #eaebee;
+    border-radius: 5px;
+    font-size : 14px;
+    height : 35px;
+    width : 230px;
+    margin-right: 0.8rem;
+}
+
+.nav .searchbar:focus {
+    outline: none;
+}
+
+.nav .btn{
+    list-style: none;
+    background-color: white;
+    border-color: #adadad;
+    border-radius: 5px;
+    border-width : thin;
+    height : 35px;
+    width: 90px;
+    margin-right: 0;
+}
+
+.nav .chat-link{
+    font-size : 15px;
+    font-weight: 700;
+    justify-content: center;
+}
+
+.nav .btn:active{
+    nav-down: auto;
+}
