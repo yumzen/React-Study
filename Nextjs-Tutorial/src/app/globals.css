@@ -1,0 +1,57 @@
+body {
+  margin: 0;
+  background-color: black;
+  color: white;
+}
+
+.Navbar {
+  background-color: white;
+  height: 50px;
+  display: flex;
+  align-items: center;
+}
+
+.Navbar a{
+  text-decoration: none;
+  color: black;
+  font-size: 18px;
+  padding: 10px;
+  margin: 0 10px;
+}
+
+.Navbar a:hover {
+  color: #a8a8a8;
+}
+
+.title {
+  text-align: center;
+  margin-top: 150px;
+  font-size: 20px;
+}
+
+.title-sub {
+  text-align: center;
+}
+
+.food {
+  margin: auto;
+  text-align: center;
+  border-radius: 5px;
+  margin-top: 20px auto;
+  width: 200px;
+  background-color: white;
+  color: black;
+}
+
+.food-img{
+  width: 100%;
+  height: auto;
+}
+
+.cart-item{
+  padding: 10px;
+  display: flex;
+  justify-content: space-around;
+  border-bottom: 1px solid grey;
+  line-height: 0px;
+}
