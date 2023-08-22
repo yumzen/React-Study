@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+</head>
+    <body>
+
+        <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+        <!-- iamport.payment.js -->
+        <script src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+        <!-- axios -->
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+        <div>
+
+        <div>
+            <h2>IAMPORT 결제 데모</h2>
+            <li>
+                <button id="iamportPayment" type="button">결제테스트</button>
+            </li>
+        </div>
+
+        <script>
+            const apikey = process.env.IMPORT_KEY;
+
+            function fetchOrder_id() {
+                return axios({
+                    url: "{}", 
+                    method: "get",
+                    headers: { "Content-Type": "application/json" }
+                });
+            }
+
+
+            $(document).ready(function(){
+                $("#iamportPayment").click(function(){
+                    fetchOrder_id().then(response => {
+                        const order_id = response.data.order_id; 
+                        payment(order_id);
+                    }).catch(error => {
+                        console.error('Error fetching order ID:', error);
+                    });
+                });
+            });
+
+            function payment(data){
+                IMP.init(apikey);
+                IMP.request_pay({ // 결제창 호출
+                    pg: "kakaopay.TC0ONETIME",
+                    pay_method: "card",
+                    merchant_uid: "iamport_test_id", //주문번호
+                    name: "티켓",
+                    amount: 5000,
+                    buyer_email: "testiamport@naver.com",
+                    buyer_name: "홍길동",
+                    buyer_tel: "01012341234"
+                }, function(rsp){
+                    if (rsp.success){
+                        alert("완료 -> imp_uid: " + rsp.imp_uid + " / merchant_uid(orderKey): " + rsp.merchant_uid);
+
+                        // 결제 성공 시 서버로 결제 정보 전송
+                        if (rsp.success) {
+                            axios({
+                                url: "{서버의 결제 정보를 받는 endpoint}", // 서버의 실제 주소로 변경
+                                method: "post",
+                                headers: { "Content-Type": "application/json" },
+                                data: {
+                                    imp_uid: rsp.imp_uid,
+                                    merchant_uid: rsp.merchant_uid
+                                }
+                            }).then((data) => {
+                                // 서버 결제 API 성공시 로직
+                                console.log("서버로 결제 정보 전송 완료:", data);
+                            }).catch((error) => {
+                                console.error("서버로 결제 정보 전송 실패:", error);
+                            });
+                        }
+                    } else {
+                        alert("실패: 코드(" + rsp.error_code + ") / 메세지(" + rsp.error_msg + ")");
+                    }
+                    axios({
+                        url: "YOUR_BACKEND_VERIFY_ENDPOINT", // 백엔드의 verifyPayment를 호출하는 엔드포인트로 변경
+                        method: "post",
+                        headers: { "Content-Type": "application/json" },
+                        data: {
+                            imp_uid: rsp.imp_uid,
+                            merchant_uid: rsp.merchant_uid
+                        }
+                    }).then((verifyResponse) => {
+                        if (verifyResponse.data.success) {
+                            console.log("결제 검증 성공:", verifyResponse.data.message);
+                        } else {
+                            console.log("결제 검증 실패:", verifyResponse.data.message);
+                        }
+                    }).catch((verifyError) => {
+                        console.error("결제 검증 요청 실패:", verifyError);
+                    });
+                });
+            }
+        </script>
+    </body>
+</html>
